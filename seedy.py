@@ -234,6 +234,7 @@ def print_menu():
     [4] ✓ Validate seed phrase
     [5] 📋 Display addresses
     [6] 🔀 Descramble seed
+    [7] ✨ Generate new seed
     """
     print(menu)
 
@@ -242,6 +243,23 @@ def print_progress_bar(percentage):
     filled = int(bar_length * percentage)
     bar = '█' * filled + '░' * (bar_length - filled)
     return f'[{bar}] {percentage*100:.1f}%'
+
+def generate_new_seed():
+    mnemo = Mnemonic("english")
+    new_seed = mnemo.generate(strength=256)
+    Account.enable_unaudited_hdwallet_features()
+    account = Account.from_mnemonic(new_seed)
+    
+    print("\n✨ Generated New Seed Phrase:")
+    print(f"{new_seed}")
+    print("\n📍 Corresponding ETH Address:")
+    print(f"{account.address}")
+    
+    with open('new_seed.txt', 'w') as f:
+        f.write(f"Seed Phrase:\n{new_seed}\n\nETH Address:\n{account.address}")
+    print("\n💾 Saved to 'new_seed.txt'")
+    return new_seed
+
 
 def main():
     clear_screen()
@@ -348,8 +366,12 @@ def main():
         else:
             print("\nNo valid combinations found")
 
+    elif mode == "7":
+        generate_new_seed()
     else:
         print("Invalid mode number")
         print("Please try one of the listed options or use 'python seedy.py -h' for help")
+
 if __name__ == "__main__":
     main()
+
