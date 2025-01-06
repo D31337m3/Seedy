@@ -16,12 +16,11 @@ A powerful command-line tool for managing and recovering Ethereum seed phrases w
 1. Clone the repository:
 ```bash
 git clone https://github.com/D31337m3/Seedy.git
-
-
-README.md
-Install required dependencies:
+'''
+2. Install required dependencies:
+```bash
 pip install mnemonic eth_account
-
+'''
 
 Usage
 Run the tool:
